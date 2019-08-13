@@ -1,12 +1,13 @@
 {
   "name": "modular-styles",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "main": "src/main.js",
   "bin": "bin/main.js",
   "license": "MIT",
   "scripts": {
     "dev": "shadow-cljs watch module",
-    "release": "shadow-cljs release module"
+    "release": "shadow-cljs release module",
+    "prepare": "yarn release"
   },
   "dependencies": {
     "commander": "^3.0.0",
@@ -24,5 +25,12 @@
   },
   "devDependencies": {
     "postcss-import": "^12.0.1"
-  }
+  },
+  "files": [
+    "src",
+    "bin",
+    "dist",
+    ".gitignore",
+    "shadow-cljs.edn"
+  ]
 }

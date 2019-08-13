@@ -1,0 +1,7 @@
+;; shadow-cljs configuration
+{:source-paths ["src"]
+ :dependencies []
+ :builds {:module {:target :node-library
+                   :output-to "dist/main.js"
+                   :output-dir "dev/"
+                   :exports-var transform-json/get-json}}}

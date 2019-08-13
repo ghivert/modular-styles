@@ -1,0 +1,7 @@
+node_modules/
+.target/
+.shadow-cljs
+test/
+/test.js
+dist/
+dev/

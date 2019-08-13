@@ -6,6 +6,7 @@ const concat = require('gulp-concat')
 const debug = require('gulp-debug')
 const gulpif = require('gulp-if')
 const cssnano = require('cssnano')
+const importCwd = require('import-cwd')
 
 const cljsGetJSON = require('../dist/main')
 
@@ -28,7 +29,7 @@ const getConfig = () => {
 
 const usePlugins = plugins => {
   return Object.entries(plugins).map(([plugin, options]) => {
-    return require(plugin)(options)
+    return importCwd(plugin)(options)
   })
 }
 
@@ -77,7 +78,7 @@ const css = ({
 }
 
 const styles = options => () => {
-  gulp.watch(filesPath, css(options))
+  gulp.watch(options.filesPath, css(options))
 }
 
 const watch = options => {

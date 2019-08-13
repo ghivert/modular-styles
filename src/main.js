@@ -60,7 +60,7 @@ const css = ({
   destPath,
   filesPath,
   extension,
-  resultCSSPath,
+  tempCSS,
   bundleName,
   bundleCSSPath,
 }) => {
@@ -69,7 +69,7 @@ const css = ({
     return gulp.src(path.resolve(filesPath, `**/*.${extension || 'css'}`))
       .pipe(debug({ title: 'Beginning' }))
       .pipe(postcss(plugins, options))
-      .pipe(gulpif(!!resultCSSPath, gulp.dest(path.resolve(resultCSSPath || ''))))
+      .pipe(gulpif(!!tempCSS, gulp.dest(path.resolve(tempCSS || ''))))
       .pipe(concat(bundleName || 'styles.css'))
       .pipe(postcss(allFilesPlugins))
       .pipe(gulp.dest(path.resolve(bundleCSSPath || './public')))

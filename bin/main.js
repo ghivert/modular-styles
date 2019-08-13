@@ -10,7 +10,7 @@ const convertOptions = options => ({
   extensions: options.extension,
   bundlerName: options.bundleName,
   bundlePath: options.bundlePath,
-  resultCSSPath: options.tempCSS,
+  tempCSS: options.tempCSS,
 })
 
 program.version('0.0.1')

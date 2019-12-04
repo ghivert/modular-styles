@@ -25,10 +25,16 @@
       (remove-extension)
       (str (if (= language "elm") ".elm" ".cljs"))))
 
+(defn capitalize-file-name [language file-name]
+  (if (= language "elm")
+    (string/capitalize file-name)
+    file-name))
+
 (defn get-full-path! [files-path dest-path css-file-name language]
   (->> css-file-name
        (relative-path files-path)
        (replace-extension-by language)
+       (capitalize-file-name language)
        (.resolve path dest-path)))
 
 (defn render-namespace-and-content [package-path file-content]

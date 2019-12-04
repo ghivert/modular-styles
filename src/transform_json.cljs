@@ -25,9 +25,15 @@
       (remove-extension)
       (str (if (= language "elm") ".elm" ".cljs"))))
 
+(defn capitalize-first [[first & rest]]
+  (cons (string/capitalize first) rest))
+
 (defn capitalize-file-name [language file-name]
   (if (= language "elm")
-    (string/capitalize file-name)
+    (let [res (string/split file-name #"/")]
+      (->> res
+           (map string/capitalize)
+           (string/join "/")))
     file-name))
 
 (defn get-full-path! [files-path dest-path css-file-name language]
@@ -75,7 +81,7 @@
 
 (defn json-classes-to-elm-const [[class-name class-module-name]]
   (let [sig (str class-name " : String")
-        decl (str class-name " = \"" class-module-name "\"")]
+        decl (str class-name " = \"" class-module-name "\"\n")]
     (string/join "\n" [sig decl])))
 
 (defn render-complete-generic-file [mapper render-content]

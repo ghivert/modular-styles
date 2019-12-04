@@ -11,6 +11,7 @@ const convertOptions = options => ({
   bundlerName: options.bundleName,
   bundlePath: options.bundlePath,
   tempCSS: options.tempCSS,
+  language: options.lang,
 })
 
 program.version('0.0.1')
@@ -24,6 +25,7 @@ program
   .option('--tempCSS <tempCSS>', 'Path for temporary stylesheets.')
   .option('--bundleName <bundleName>', 'Name for resulting CSS bundle. Defaults to styles.css.')
   .option('--bundlePath <bundleCSSPath>', 'Path for resulting CSS bundle. Defaults to public.')
+  .option('--lang <language>', 'Select language into which modules will be generated.')
   .action(options => {
     main.compile(convertOptions(options))
   })
@@ -35,8 +37,9 @@ program
   .option('--source <sourcePath>', 'Source path for project.')
   .option('--extension <extension>', 'Stylesheets extension. Defaults to css.')
   .option('--tempCSS <tempCSS>', 'Path for temporary stylesheets.')
-  .option('--bundlName <bundleName>', 'Name for resulting CSS bundle. Defaults to styles.css.')
+  .option('--bundleName <bundleName>', 'Name for resulting CSS bundle. Defaults to styles.css.')
   .option('--bundlePath <bundleCSSPath>', 'Path for resulting CSS bundle. Defaults to public.')
+  .option('--lang <language>', 'Select language into which modules will be generated.')
   .action((options) => {
     main.watch(convertOptions(options))
   })

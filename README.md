@@ -74,6 +74,7 @@ Some smarter things could be done for those languages.
 minification dumping.
 - `--bundleName <bundleName>` is the name for the resulting CSS bundle. Defaults to `styles.css`.
 - `--bundlePath <bundleCSSPath>` is the path for the resulting CSS bundle. Defaults to `public`.
+- `--lang <language>` is the language in which you want your CSS modules to be converted. Defaults to `cljs`. Supports also `elm`.
 
 You probably will end up with something like:
 

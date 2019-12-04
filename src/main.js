@@ -33,9 +33,9 @@ const usePlugins = plugins => {
   })
 }
 
-const postcssModules = ({ sourcePath, filesPath, destPath }) => {
+const postcssModules = ({ sourcePath, filesPath, destPath, language }) => {
   return require('postcss-modules')({
-    getJSON: cljsGetJSON(sourcePath, filesPath, destPath)
+    getJSON: cljsGetJSON(sourcePath, filesPath, destPath, language)
   })
 }
 
@@ -63,8 +63,9 @@ const css = ({
   tempCSS,
   bundleName,
   bundleCSSPath,
+  language,
 }) => {
-  const { plugins, ...options } = computeOptions({ sourcePath, filesPath, destPath })
+  const { plugins, ...options } = computeOptions({ sourcePath, filesPath, destPath, language })
   return () => {
     return gulp.src(path.resolve(filesPath, `**/*.${extension || 'css'}`))
       .pipe(debug({ title: 'Beginning' }))

@@ -20,15 +20,15 @@
 (defn remove-extension [file-path]
   (string/replace file-path #".[^/.]+$" ""))
 
-(defn replace-extension-by-cljs [file-path]
+(defn replace-extension-by [language file-path]
   (-> file-path
       (remove-extension)
-      (str ".cljs")))
+      (str (if (= language "elm") ".elm" ".cljs"))))
 
-(defn get-full-path! [files-path dest-path css-file-name]
+(defn get-full-path! [files-path dest-path css-file-name language]
   (->> css-file-name
        (relative-path files-path)
-       (replace-extension-by-cljs)
+       (replace-extension-by language)
        (.resolve path dest-path)))
 
 (defn render-namespace-and-content [package-path file-content]
@@ -37,29 +37,72 @@
         (string/join "\n\n" [v file-content])
         (str v "\n")))
 
-(defn turn-to-package-path [file-path]
+(defn render-module-and-content [package-path file-content]
+  (as-> package-path v
+        (string/join "" ["module " v " exposing (..)"])
+        (string/join "\n\n" [v file-content])
+        (str v "\n")))
+
+(defn turn-to-clojure-package-path [file-path]
   (string/replace file-path #"/" "."))
 
-(defn path-to-package-path [source-path full-path]
+(defn turn-to-elm-package-path [file-path]
+  (as-> file-path v
+        (string/split v #"/")
+        (map string/capitalize v)
+        (string/join "." v)))
+
+(defn path-to-cljs-package-path [source-path full-path]
   (-> source-path
       (relative-path full-path)
       (remove-extension)
-      (turn-to-package-path)))
+      (turn-to-clojure-package-path)))
+
+(defn path-to-elm-package-path [source-path full-path]
+  (-> source-path
+      (relative-path full-path)
+      (remove-extension)
+      (turn-to-elm-package-path)))
 
 (defn json-classes-to-clojure-def [[class-name class-module-name]]
   (str "(def " class-name " \"" class-module-name "\")"))
 
-(defn render-complete-file [source-path json full-path]
-  (->> json
-       (js->clj)
-       (map json-classes-to-clojure-def)
-       (string/join "\n")
-       (render-namespace-and-content
-        (path-to-package-path source-path full-path))))
+(defn json-classes-to-elm-const [[class-name class-module-name]]
+  (let [sig (str class-name " : String")
+        decl (str class-name " = \"" class-module-name "\"")]
+    (string/join "\n" [sig decl])))
 
-(defn get-json [source-path files-path dest-path]
+(defn render-complete-generic-file [mapper render-content]
+  (fn [source-path json full-path]
+    (->> json
+         (js->clj)
+         (map mapper)
+         (string/join "\n")
+         (render-content source-path full-path))))
+
+(def render-complete-clojure-file
+  (render-complete-generic-file
+   json-classes-to-clojure-def
+   (fn [source-path full-path json]
+     (render-namespace-and-content
+      (path-to-cljs-package-path source-path full-path) json))))
+
+(def render-complete-elm-file
+  (render-complete-generic-file
+   json-classes-to-elm-const
+   (fn [source-path full-path json]
+     (render-module-and-content
+      (path-to-elm-package-path source-path full-path) json))))
+
+(defn render-complete-file [source-path json language full-path]
+  (condp = language
+    "elm" (render-complete-elm-file source-path json full-path)
+    "cljs" (render-complete-clojure-file source-path json full-path)
+    (render-complete-clojure-file source-path json full-path)))
+
+(defn get-json [source-path files-path dest-path language]
   (fn [css-file-name json]
-    (let [full-path (get-full-path! files-path dest-path css-file-name)]
+    (let [full-path (get-full-path! files-path dest-path css-file-name language)]
       (->> full-path
-           (render-complete-file source-path json)
+           (render-complete-file source-path json language)
            (write-file! full-path)))))

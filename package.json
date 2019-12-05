@@ -1,6 +1,6 @@
 {
   "name": "modular-styles",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "main": "src/main.js",
   "bin": "bin/main.js",
   "license": "MIT",

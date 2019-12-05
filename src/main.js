@@ -58,7 +58,7 @@ const css = ({
   extension,
   tempCSS,
   bundleName,
-  bundleCSSPath,
+  bundlePath,
   language,
 }) => {
   const { plugins, ...options } = computeOptions({
@@ -76,7 +76,7 @@ const css = ({
       .pipe(gulpif(!!tempCSS, gulp.dest(path.resolve(tempCSS || ''))))
       .pipe(concat(bundleName || 'styles.css'))
       .pipe(postcss(allFilesPlugins))
-      .pipe(gulp.dest(path.resolve(bundleCSSPath || './public')))
+      .pipe(gulp.dest(path.resolve(bundlePath || './public')))
       .pipe(debug({ title: 'CSS Modules compilation finished!' }))
   }
 }

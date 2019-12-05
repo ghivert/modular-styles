@@ -25,10 +25,8 @@ program
   .option('--tempCSS <tempCSS>', 'Path for temporary stylesheets.')
   .option('--bundleName <bundleName>', 'Name for resulting CSS bundle. Defaults to styles.css.')
   .option('--bundlePath <bundleCSSPath>', 'Path for resulting CSS bundle. Defaults to public.')
-  .option('--lang <language>', 'Select language into which modules will be generated.')
-  .action(options => {
-    main.compile(convertOptions(options))
-  })
+  .option('--lang <language>', 'Select language into which modules will be generated. Defaults to cljs.')
+  .action(options => main.compile(convertOptions(options)))
 
 program
   .command('watch')
@@ -39,9 +37,7 @@ program
   .option('--tempCSS <tempCSS>', 'Path for temporary stylesheets.')
   .option('--bundleName <bundleName>', 'Name for resulting CSS bundle. Defaults to styles.css.')
   .option('--bundlePath <bundleCSSPath>', 'Path for resulting CSS bundle. Defaults to public.')
-  .option('--lang <language>', 'Select language into which modules will be generated.')
-  .action((options) => {
-    main.watch(convertOptions(options))
-  })
+  .option('--lang <language>', 'Select language into which modules will be generated. Defaults to cljs.')
+  .action((options) => main.watch(convertOptions(options)))
 
 program.parse(process.argv)

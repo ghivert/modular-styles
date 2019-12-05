@@ -4,4 +4,7 @@
  :builds {:module {:target :node-library
                    :output-to "dist/main.js"
                    :output-dir "dev/"
-                   :exports-var transform-json/get-json}}}
+                   :exports-var transform-json/get-json}
+          :test {:target :node-script
+                 :main main/really-test
+                 :output-to "dist/main.js"}}}

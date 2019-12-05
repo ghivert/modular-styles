@@ -17,6 +17,7 @@
     "gulp-concat": "^2.6.1",
     "gulp-debug": "^4.0.0",
     "gulp-if": "^3.0.0",
+    "gulp-plumber": "^1.2.1",
     "gulp-postcss": "^8.0.0",
     "import-cwd": "^3.0.0",
     "postcss": "^7.0.17",

@@ -4,6 +4,7 @@ const gulp = require('gulp')
 const postcss = require('gulp-postcss')
 const concat = require('gulp-concat')
 const debug = require('gulp-debug')
+const plumber = require('gulp-plumber')
 const gulpif = require('gulp-if')
 const cssnano = require('cssnano')
 const importCwd = require('import-cwd')
@@ -35,25 +36,20 @@ const usePlugins = plugins => {
 
 const postcssModules = ({ sourcePath, filesPath, destPath, language }) => {
   return require('postcss-modules')({
-    getJSON: cljsGetJSON(sourcePath, filesPath, destPath, language)
+    getJSON: cljsGetJSON(sourcePath, filesPath, destPath, language),
   })
 }
 
-const computeOptions = (options) => {
+const computeOptions = options => {
   const config = getConfig()
   const plugs = usePlugins(config.plugins || {})
   return {
     ...config,
-    plugins: [
-      postcssModules(options),
-      ...plugs,
-    ],
+    plugins: [postcssModules(options), ...plugs],
   }
 }
 
-const allFilesPlugins = [
-  cssnano()
-]
+const allFilesPlugins = [cssnano()]
 
 const css = ({
   sourcePath,
@@ -65,16 +61,23 @@ const css = ({
   bundleCSSPath,
   language,
 }) => {
-  const { plugins, ...options } = computeOptions({ sourcePath, filesPath, destPath, language })
+  const { plugins, ...options } = computeOptions({
+    sourcePath,
+    filesPath,
+    destPath,
+    language,
+  })
   return () => {
-    return gulp.src(path.resolve(filesPath, `**/*.${extension || 'css'}`))
-      .pipe(debug({ title: 'Beginning' }))
+    return gulp
+      .src(path.resolve(filesPath, `**/*.${extension || 'css'}`))
+      .pipe(plumber())
+      .pipe(debug({ title: 'Beginning compiling CSS Modules...' }))
       .pipe(postcss(plugins, options))
       .pipe(gulpif(!!tempCSS, gulp.dest(path.resolve(tempCSS || ''))))
       .pipe(concat(bundleName || 'styles.css'))
       .pipe(postcss(allFilesPlugins))
       .pipe(gulp.dest(path.resolve(bundleCSSPath || './public')))
-      .pipe(debug({ title: 'Finished!' }))
+      .pipe(debug({ title: 'CSS Modules compilation finished!' }))
   }
 }
 

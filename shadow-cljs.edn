@@ -1,10 +1,10 @@
 ;; shadow-cljs configuration
-{:source-paths ["src"]
+{:source-paths ["src" "test"]
  :dependencies []
  :builds {:module {:target :node-library
                    :output-to "dist/main.js"
                    :output-dir "dev/"
                    :exports-var transform-json/get-json}
-          :test {:target :node-script
-                 :main main/really-test
-                 :output-to "dist/main.js"}}}
+          :test {:target :node-test
+                 :autorun true
+                 :output-to "test-dist/test.js"}}}

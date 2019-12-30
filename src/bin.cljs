@@ -2,7 +2,7 @@
   (:require ["commander" :as program]
             [main]))
 
-(.version program "0.0.2")
+(.version program "0.1.2")
 
 (-> program
     (.command "compile")

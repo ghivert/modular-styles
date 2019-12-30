@@ -112,7 +112,7 @@
     "cljs" (render-complete-clojure-file source-path json full-path)
     (render-complete-clojure-file source-path json full-path)))
 
-(defn get-json [source-path files-path dest-path language]
+(defn get-json! [source-path files-path dest-path language]
   (fn [css-file-name json]
     (let [full-path (get-full-path! files-path dest-path css-file-name language)]
       (->> full-path

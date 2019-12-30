@@ -27,24 +27,22 @@
                           ((import-cwd plugin) options))]
     (mapv require-postcss plugins)))
 
-(defn postcss-modules [{:keys [source-path files-path dest-path language]}]
-  (let [temp (transform-json/get-json source-path files-path dest-path language)
+(defn postcss-modules! [{:keys [source-path files-path dest-path language]}]
+  (let [temp (transform-json/get-json! source-path files-path dest-path language)
         options (clj->js {:getJSON temp})]
     ((js/require "postcss-modules") options)))
 
-(defn compute-options [options]
+(defn compute-options! [options]
   (let [config (get-config)
         plugins (use-plugins (or (get config "plugins") {}))
-        converted-plugins (into [] (concat [(postcss-modules options)] plugins))]
+        converted-plugins (into [] (concat [(postcss-modules! options)] plugins))]
     (assoc config "plugins" converted-plugins)))
 
 (def all-files-plugins [(cssnano)])
 
-(defn css [{:keys [source-path dest-path files-path extension temp-css bundle-name bundle-path language]}]
-  (let [{:strs [plugins] :as options} (compute-options {:source-path source-path
-                                                        :files-path files-path
-                                                        :dest-path dest-path
-                                                        :language language})
+(defn css![options]
+  (let [{:keys [files-path extension temp-css bundle-name bundle-path]} options
+        {:strs [plugins] :as options} (compute-options! options)
         gulp-if-condition (not (not temp-css))]
     (fn []
       (-> gulp
@@ -59,7 +57,7 @@
           (.pipe (debug (clj->js {:title "CSS Modules compilation finished!"})))))))
 
 (defn styles [options]
-  (fn [] (.watch gulp (:files-path options) (css options))))
+  (fn [] (.watch gulp (:files-path options) (css! options))))
 
 (defn convert-options [options]
   (if (object? options)
@@ -76,10 +74,10 @@
 
 (defn compile [options]
   (let [opts (convert-options options)]
-    (.task gulp "css" (css opts))
+    (.task gulp "css" (css! opts))
     ((.task gulp "css"))))
 
 (defn watch [options]
   (let [opts (convert-options options)]
-    (.task gulp "watch-styles" (.series gulp (css opts) (styles opts)))
+    (.task gulp "watch-styles" (.series gulp (css! opts) (styles opts)))
     ((.task gulp "watch-styles"))))

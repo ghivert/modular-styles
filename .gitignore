@@ -7,3 +7,5 @@ dist/
 dev/
 test-dist/
 /.postcss*
+public/
+/styles

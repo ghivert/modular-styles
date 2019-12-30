@@ -28,9 +28,11 @@
     (mapv require-postcss plugins)))
 
 (defn postcss-modules! [{:keys [source-path files-path dest-path language]}]
-  (let [temp (transform-json/get-json! source-path files-path dest-path language)
-        options (clj->js {:getJSON temp})]
-    ((js/require "postcss-modules") options)))
+  (let [postcss-modules (js/require "postcss-modules")]
+    (->> (transform-json/get-json! source-path files-path dest-path language)
+         (hash-map :getJSON)
+         (clj->js)
+         (postcss-modules))))
 
 (defn compute-options! [options]
   (let [config (get-config)

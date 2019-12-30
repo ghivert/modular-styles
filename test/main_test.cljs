@@ -4,7 +4,7 @@
 
 (deftest a-testing-test
   (async done
-         (main/compile {:source-path "src"
+         (main/compile {:source-path "styles"
                         :dest-path "styles"
                         :files-path "src/test"})
          (js/setTimeout done 10000)))

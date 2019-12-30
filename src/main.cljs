@@ -61,10 +61,25 @@
 (defn styles [options]
   (fn [] (.watch gulp (:files-path options) (css options))))
 
+(defn convert-options [options]
+  (if (object? options)
+    (let [opts (js->clj options :keywordize-keys true)]
+      {:source-path (or (:source opts) (:sourcePath opts))
+       :files-path (or (:files opts) (:filesPath opts))
+       :dest-path (or (:dest opts) (:destPath opts))
+       :extension (:extension opts)
+       :bundle-name (:bundleName opts)
+       :bundle-path (:bundlePath opts)
+       :temp-css (:tempCSS opts)
+       :language (:language opts)})
+    options))
+
 (defn compile [options]
-  (.task gulp "css" (css options))
-  ((.task gulp "css")))
+  (let [opts (convert-options options)]
+    (.task gulp "css" (css opts))
+    ((.task gulp "css"))))
 
 (defn watch [options]
-  (.task gulp "watch-styles" (.series gulp (css options) (styles options)))
-  ((.task gulp "watch-styles")))
+  (let [opts (convert-options options)]
+    (.task gulp "watch-styles" (.series gulp (css opts) (styles opts)))
+    ((.task gulp "watch-styles"))))

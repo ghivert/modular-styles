@@ -91,12 +91,13 @@ const modularStyles = require('modular-styles')
 
 const options = {
   sourcePath: 'src',
-  filesPath: 'src/styles',,
-  destPath: 'src/project_name/styles'
-  extensions: 'css',
-  bundlerName: 'styles.css',
+  filesPath: 'src/styles',
+  destPath: 'src/project_name/styles',
+  extension: 'css',
+  bundleName: 'styles.css',
   bundlePath: 'public',
   tempCSS: 'public/css',
+  language: 'cljs',
 }
 
 // Use once.

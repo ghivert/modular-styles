@@ -29,3 +29,6 @@
     (.action (fn [options] (main/watch options))))
 
 (.parse program (.-argv js/process))
+
+(defn -main []
+  nil)

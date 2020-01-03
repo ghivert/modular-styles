@@ -2,9 +2,14 @@
 {:source-paths ["src" "test"]
  :dependencies []
  :builds {:module {:target :node-library
-                   :output-to "dist/main.js"
+                   :output-to "dist/module.js"
                    :output-dir "dev/"
-                   :exports-var transform-json/get-json}
+                   :exports {:compile main/compile
+                             :watch main/watch}}
+          :cli {:target :node-script
+                :main bin/-main
+                :output-to "dist/modular-styles.js"
+                :output-dir "dev/"}
           :test {:target :node-test
                  :autorun true
                  :output-to "test-dist/test.js"}}}

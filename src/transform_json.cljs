@@ -56,7 +56,9 @@
         (str v "\n")))
 
 (defn turn-to-clojure-package-path [file-path]
-  (string/replace file-path #"/" "."))
+  (-> file-path
+      (string/replace #"/" ".")
+      (string/replace #"_" "-")))
 
 (defn turn-to-elm-package-path [file-path]
   (as-> file-path v

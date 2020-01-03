@@ -6,8 +6,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "shadow-cljs watch module",
-    "release": "shadow-cljs release module",
-    "prepare": "yarn release",
+    "release": "shadow-cljs release module && shadow-cljs release cli",
     "test": "shadow-cljs watch test"
   },
   "dependencies": {

@@ -42,13 +42,14 @@
 
 (def all-files-plugins [(cssnano)])
 
-(defn css![options]
+(defn css! [options]
   (let [{:keys [files-path extension temp-css bundle-name bundle-path]} options
         {:strs [plugins] :as options} (compute-options! options)
         gulp-if-condition (not (not temp-css))]
     (fn []
       (-> gulp
           (.src (path/resolve files-path (str "**/*." (or extension "css"))))
+          (.pipe (debug (clj->js {:title "Test"})))
           (.pipe (plumber))
           (.pipe (debug (clj->js {:title "Beginning compiling CSS Modules..."})))
           (.pipe (postcss (clj->js plugins) (clj->js (dissoc options "plugins"))))
@@ -62,16 +63,15 @@
   (fn [] (.watch gulp (:files-path options) (css! options))))
 
 (defn convert-options [options]
-  (if (object? options)
-    (let [opts (js->clj options :keywordize-keys true)]
-      {:source-path (or (:source opts) (:sourcePath opts))
-       :files-path (or (:files opts) (:filesPath opts))
-       :dest-path (or (:dest opts) (:destPath opts))
-       :extension (:extension opts)
-       :bundle-name (:bundleName opts)
-       :bundle-path (:bundlePath opts)
-       :temp-css (:tempCSS opts)
-       :language (:language opts)})
+  (if (not (map? options))
+    {:source-path (or (.-source options) (.-sourcePath options))
+     :files-path (or (.-files options) (.-filesPath options))
+     :dest-path (or (.-dest options) (.-destPath options))
+     :extension (.-extension options)
+     :bundle-name (.-bundleName options)
+     :bundle-path (.-bundlePath options)
+     :temp-css (.-tempCSS options)
+     :language (.-language options)}
     options))
 
 (defn compile [options]
@@ -79,7 +79,7 @@
     (.task gulp "css" (css! opts))
     ((.task gulp "css"))))
 
-(defn watch [options]
+(defn watch [options from-js]
   (let [opts (convert-options options)]
     (.task gulp "watch-styles" (.series gulp (css! opts) (styles opts)))
     ((.task gulp "watch-styles"))))

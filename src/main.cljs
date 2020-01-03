@@ -79,7 +79,7 @@
     (.task gulp "css" (css! opts))
     ((.task gulp "css"))))
 
-(defn watch [options from-js]
+(defn watch [options]
   (let [opts (convert-options options)]
     (.task gulp "watch-styles" (.series gulp (css! opts) (styles opts)))
     ((.task gulp "watch-styles"))))

@@ -1,12 +1,12 @@
 {
   "name": "modular-styles",
   "version": "0.1.1",
-  "main": "src/main.js",
-  "bin": "bin/main.js",
+  "main": "dist/main.js",
+  "bin": "dist/cli.js",
   "license": "MIT",
   "scripts": {
     "dev": "shadow-cljs watch module",
-    "release": "shadow-cljs release module && shadow-cljs release cli",
+    "prepublish": "shadow-cljs release module && shadow-cljs release cli",
     "test": "shadow-cljs watch test"
   },
   "dependencies": {
@@ -23,17 +23,13 @@
     "postcss": "^7.0.17",
     "postcss-load-config": "^2.1.0",
     "postcss-modules": "^1.4.1",
-    "postcss-preset-env": "^6.7.0",
-    "shadow-cljs": "^2.8.46"
+    "postcss-preset-env": "^6.7.0"
   },
   "devDependencies": {
+    "shadow-cljs": "^2.8.46",
     "postcss-import": "^12.0.1"
   },
   "files": [
-    "src",
-    "bin",
-    "dist",
-    ".gitignore",
-    "shadow-cljs.edn"
+    "dist"
   ]
 }

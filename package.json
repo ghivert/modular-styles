@@ -1,8 +1,8 @@
 {
   "name": "modular-styles",
   "version": "0.1.2",
-  "main": "dist/main.js",
-  "bin": "dist/cli.js",
+  "main": "dist/module.js",
+  "bin": "dist/modular-styles.js",
   "license": "MIT",
   "scripts": {
     "dev": "shadow-cljs watch module",

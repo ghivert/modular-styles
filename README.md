@@ -95,7 +95,7 @@ const options = {
   destPath: 'src/project_name/styles',
   extension: 'css',
   bundleName: 'styles.css',
-  bundlePath: 'public',
+  bundleCSSPath: 'public',
   tempCSS: 'public/css',
   language: 'cljs',
 }

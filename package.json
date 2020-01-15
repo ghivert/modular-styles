@@ -1,6 +1,6 @@
 {
   "name": "modular-styles",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "dist/main.js",
   "bin": "dist/cli.js",
   "license": "MIT",
@@ -26,8 +26,8 @@
     "postcss-preset-env": "^6.7.0"
   },
   "devDependencies": {
-    "shadow-cljs": "^2.8.46",
-    "postcss-import": "^12.0.1"
+    "postcss-import": "^12.0.1",
+    "shadow-cljs": "^2.8.46"
   },
   "files": [
     "dist"

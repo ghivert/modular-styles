@@ -47,6 +47,50 @@ Modular Styles exists in two flavors: the CLI, and the API, in order to
 integrate easily with all flows, whether they are NPM scripts or more advanced
 processes.
 
+## Installation
+
+```bash
+npm install --save-dev modular-styles
+```
+
+## Additional Set-up
+
+To start using modular styles, you need to prepare several things.
+
+### Install PostCSS plugins and configure it:
+```bash
+npm install --save-dev <list of PostCSS plugins>
+```
+
+Example:
+```bash
+npm install --save-dev postcss-import postcss-preset-env
+```
+
+For configuration look at the [dedicated section](#postcss-configurations).
+
+### Prepare NPM scripts
+
+```json
+{
+  "scripts": {
+    "watch-styles": "<your styles watching script>",
+    "build-styles": "<your styles building script>"
+  }
+}
+```
+
+To write scripts either use [CLI](#cli) ([example](https://github.com/ghivert/re-frame-template/blob/master/package.json)) or [JavaScript](#api) ([example](https://github.com/guillaumeboudon/wishlist)).
+
+## Usage
+
+Before the development, open a dedicated terminal window and run:
+```bash
+npm run watch-styles
+```
+
+This command will bring to foreground watching process rebuilding your CSS on every file save.
+
 ## CLI
 
 ```bash

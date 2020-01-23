@@ -51,6 +51,8 @@ processes.
 
 ```bash
 npm install --save-dev modular-styles
+# For Yarn users
+yarn add modular-styles
 ```
 
 ## Additional Set-up
@@ -60,11 +62,15 @@ To start using modular styles, you need to prepare several things.
 ### Install PostCSS plugins and configure it:
 ```bash
 npm install --save-dev <list of PostCSS plugins>
+# For Yarn users
+yarn add <list of PostCSS plugins>
 ```
 
 Example:
 ```bash
 npm install --save-dev postcss-import postcss-preset-env
+# For Yarn users
+yarn add postcss-import postcss-preset-env
 ```
 
 For configuration look at the [dedicated section](#postcss-configurations).
@@ -87,6 +93,8 @@ To write scripts either use [CLI](#cli) ([example](https://github.com/ghivert/re
 Before the development, open a dedicated terminal window and run:
 ```bash
 npm run watch-styles
+# For Yarn users
+yarn watch-styles
 ```
 
 This command will bring to foreground watching process rebuilding your CSS on every file save.

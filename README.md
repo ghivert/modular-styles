@@ -52,7 +52,7 @@ processes.
 ```bash
 npm install --save-dev modular-styles
 # For Yarn users
-yarn add modular-styles
+yarn add --dev modular-styles
 ```
 
 ## Additional Set-up
@@ -63,14 +63,14 @@ To start using modular styles, you need to prepare several things.
 ```bash
 npm install --save-dev <list of PostCSS plugins>
 # For Yarn users
-yarn add <list of PostCSS plugins>
+yarn add --dev <list of PostCSS plugins>
 ```
 
 Example:
 ```bash
 npm install --save-dev postcss-import postcss-preset-env
 # For Yarn users
-yarn add postcss-import postcss-preset-env
+yarn add --dev postcss-import postcss-preset-env
 ```
 
 For configuration look at the [dedicated section](#postcss-configurations).

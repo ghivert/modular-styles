@@ -190,6 +190,55 @@ JSON interfaces it provides. By default, it extracts all the information and
 dumps them into the correct ClojureScript file. It is really easy to write
 another function to convert the JSON into another language.
 
+# An example?
+
+For Elm, unfortunately, we didn’t have examples yet. But for ClojureScript, take a look at the [re-frame-template example](https://github.com/ghivert/re-frame-template)!
+
+But to sum up, let’s take an imaginary file.css.
+
+```css
+/* file.css */
+.test {
+  color: red;
+
+  &:hover {
+    color: blue;
+  }
+}
+```
+
+When compiled by `modular-styles`, a ClojureScript file (like `src/re_frame_template/styles/file.cljs`) will be emitted.
+
+```clojure
+(ns re-frame-template.styles.file)
+
+(def test "__test_xed87")
+```
+
+And a final file will be generated (`public/styles.css`).
+
+```css
+.__test_xed87 {
+  color: red;
+}
+.__test_xed87:hover {
+  color: blue;
+}
+```
+
+You can then just import the `styles.css` stylesheet in your code and use the interfaces in your ClojureScript code:
+
+
+```clojure
+(ns example
+  (:require [re-frame-template.styles.file :as styles]))
+
+(defn component []
+  [:div {:class styles/test} "The class is correctly linked!"])
+```
+
+You’re done and can profit of PostCSS and CSS Modules!
+
 # Contributing?
 
 All contributions are welcome! Please submit a PR or open an issue!

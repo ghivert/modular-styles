@@ -24,7 +24,7 @@
 
 (defn use-plugins [plugins]
   (let [require-postcss (fn [[plugin options]]
-                          ((import-cwd plugin) options))]
+                          ((import-cwd plugin) (clj->js options)))]
     (mapv require-postcss plugins)))
 
 (defn postcss-modules! [{:keys [source-path files-path dest-path language]}]

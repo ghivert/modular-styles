@@ -9,6 +9,7 @@
             ["gulp-if" :as gif]
             ["cssnano" :as cssnano]
             ["import-cwd" :as import-cwd]
+            [goog.object :refer [get]]
             [transform-json]))
 
 (defn get-file [file-path]
@@ -64,14 +65,14 @@
 
 (defn convert-options [options]
   (if (not (map? options))
-    {:source-path (or (.-source options) (.-sourcePath options))
-     :files-path (or (.-files options) (.-filesPath options))
-     :dest-path (or (.-dest options) (.-destPath options))
-     :extension (.-extension options)
-     :bundle-name (.-bundleName options)
-     :bundle-path (.-bundlePath options)
-     :temp-css (.-tempCSS options)
-     :language (.-language options)}
+    {:source-path (or (get options "source") (get options "sourcePath"))
+     :files-path (or (get options "files") (get options "filesPath"))
+     :dest-path (or (get options "dest") (get options "destPath"))
+     :extension (get options "extension")
+     :bundle-name (get options "bundleName")
+     :bundle-path (get options "bundlePath")
+     :temp-css (get options "tempCSS")
+     :language (get options "language")}
     options))
 
 (defn compile [options]

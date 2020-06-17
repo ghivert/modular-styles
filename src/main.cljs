@@ -21,11 +21,12 @@
   (js->clj (or (get-file (path/resolve ".postcssrc.js"))
                (get-file (path/resolve ".postcss.config.js"))
                (get-file (path/resolve ".postcssrc.json"))
-               #js {})))
+               #js {})
+           :keywordize-keys true))
 
 (defn use-plugins [plugins]
   (let [require-postcss (fn [[plugin options]]
-                          ((import-cwd plugin) (clj->js options)))]
+                          ((import-cwd (name plugin)) (clj->js options)))]
     (mapv require-postcss plugins)))
 
 (defn postcss-modules! [{:keys [source-path files-path dest-path language]}]
@@ -37,7 +38,7 @@
 
 (defn compute-options! [options]
   (let [config (get-config)
-        plugins (use-plugins (or (get config "plugins") {}))
+        plugins (use-plugins (or (:plugins config) {}))
         converted-plugins (into [] (concat [(postcss-modules! options)] plugins))]
     (assoc config "plugins" converted-plugins)))
 

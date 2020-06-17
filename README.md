@@ -24,12 +24,12 @@ compile your CSS into usable CSS for any browser.
 - Everything is processed by PostCSS to activate the future features of CSS.
 - Optionally, the files processed can be dumped somewhere in your project.
 - In parallel, all files get an interface in JSON, with the corresponding CSS
-Modules names from the stylesheets, converted into your favorite language
-interface.
+  Modules names from the stylesheets, converted into your favorite language
+  interface.
 - All files get concatenated into one.
 - This file is finally processed by `cssnano` in order to remove code duplication.
 - Finally, just include the resulting file into your HTML template, and enjoy
-using all the features of CSSNext!
+  using all the features of CSSNext!
 
 At the end, you end up with two parts: a `styles.css` stylesheet, containing all
 the converted CSS, and a bunch of interfaces into multiple files, corresponding
@@ -50,6 +50,7 @@ processes.
 ## Installation
 
 ```bash
+# For NPM users
 npm install --save-dev modular-styles
 # For Yarn users
 yarn add --dev modular-styles
@@ -60,13 +61,16 @@ yarn add --dev modular-styles
 To start using modular styles, you need to prepare several things.
 
 ### Install PostCSS plugins and configure it:
+
 ```bash
+# For NPM users
 npm install --save-dev <list of PostCSS plugins>
 # For Yarn users
 yarn add --dev <list of PostCSS plugins>
 ```
 
 Example:
+
 ```bash
 npm install --save-dev postcss-import postcss-preset-env
 # For Yarn users
@@ -91,6 +95,7 @@ To write scripts either use [CLI](#cli) ([example](https://github.com/ghivert/re
 ## Usage
 
 Before the development, open a dedicated terminal window and run:
+
 ```bash
 npm run watch-styles
 # For Yarn users
@@ -113,19 +118,19 @@ to ensure you’re always up to date.
 Some options are required, some are not. Many configuration options are available to suit your needs.
 
 - `--files <filesPath>` should point to your CSS files. You can also just
-indicate your `src` path if you don’t have a specific stylesheets folder.
+  indicate your `src` path if you don’t have a specific stylesheets folder.
 - `--dest <destPath>` should point to where you want to put your interfaces
-once generated.
+  once generated.
 - `--source <sourcePath>` should point to the correct source path of your
-interfaces. In ClojureScript, every interface gets compiled with a
-`(ns package.name.path)` interface. The sourcePath allows to find the base path.
-Some smarter things could be done for those languages.
+  interfaces. In ClojureScript, every interface gets compiled with a
+  `(ns package.name.path)` interface. The sourcePath allows to find the base path.
+  Some smarter things could be done for those languages.
 - `--extension <extension>` should be your stylesheets extension. Defaults to css.
 - `--tempCSS <tempCSS>` should point to the path for stylesheets without
-minification dumping.
+  minification dumping.
 - `--bundleName <bundleName>` is the name for the resulting CSS bundle. Defaults to `styles.css`.
 - `--bundlePath <bundleCSSPath>` is the path for the resulting CSS bundle. Defaults to `public`.
-- `--lang <language>` is the language in which you want your CSS modules to be converted. Defaults to `cljs`. Supports `elm` as well.
+- `--language <language>` is the language in which you want your CSS modules to be converted. Defaults to `cljs`. Supports `elm`, `cljs` and `purs`.
 
 You probably will end up with something like:
 
@@ -194,7 +199,11 @@ another function to convert the JSON into another language.
 
 For Elm, unfortunately, we didn’t have examples yet. But for ClojureScript, take a look at the [re-frame-template example](https://github.com/ghivert/re-frame-template)!
 
-But to sum up, let’s take an imaginary file.css.
+But to sum up, let’s take an imaginary file.css. (Be careful, in this example, the
+`&` is the nesting rules from PostCSS which in stage 1 in PostCSS Preset Env. You
+should have a `.postcss.config.js` at the root of your project with
+`module.exports = { plugins: { 'postcss-preset-env: { stage: 1 }' } }` inside and
+have `postcss-preset-env` in your dependencies.)
 
 ```css
 /* file.css */
@@ -227,7 +236,6 @@ And a final file will be generated (`public/styles.css`).
 ```
 
 You can then just import the `styles.css` stylesheet in your code and use the interfaces in your ClojureScript code:
-
 
 ```clojure
 (ns example

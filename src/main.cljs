@@ -64,7 +64,7 @@
   (fn [] (.watch gulp (:files-path options) (css! options))))
 
 (defn convert-options [options]
-  (if (not (map? options))
+  (if-not (map? options)
     {:source-path (or (get options "source") (get options "sourcePath"))
      :files-path (or (get options "files") (get options "filesPath"))
      :dest-path (or (get options "dest") (get options "destPath"))

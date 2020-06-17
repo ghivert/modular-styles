@@ -9,3 +9,4 @@ test-dist/
 /.postcss*
 public/
 /styles
+.DS_Store

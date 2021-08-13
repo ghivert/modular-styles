@@ -3,6 +3,7 @@
             ["fs" :as fs]
             ["gulp" :as gulp]
             ["gulp-postcss" :as postcss]
+            ["gulp-sass" :as sass]
             ["gulp-concat" :as gconcat]
             ["gulp-debug" :as debug]
             ["gulp-plumber" :as plumber]
@@ -45,14 +46,16 @@
 (def all-files-plugins [(cssnano)])
 
 (defn css! [options]
-  (let [{:keys [files-path extension temp-css bundle-name bundle-path]} options
+  (let [{:keys [files-path extension temp-css bundle-name bundle-path sass-config]} options
         {:strs [plugins] :as options} (compute-options! options)
-        gulp-if-condition (not (not temp-css))]
+        gulp-if-condition (not (not temp-css))
+        gulp-if-sass (not (not sass-config))]
     (fn []
       (-> gulp
           (.src (path/resolve files-path (str "**/*." (or extension "css"))))
           (.pipe (debug (clj->js {:title "Test"})))
           (.pipe (plumber))
+          (.pipe (gif gulp-if-sass (sass sass-config)))
           (.pipe (debug (clj->js {:title "Beginning compiling CSS Modules..."})))
           (.pipe (postcss (clj->js plugins) (clj->js (dissoc options "plugins"))))
           (.pipe (gif gulp-if-condition (.dest gulp (path/resolve (or temp-css "")))))
@@ -73,7 +76,8 @@
      :bundle-name (get options "bundleName")
      :bundle-path (get options "bundlePath")
      :temp-css (get options "tempCSS")
-     :language (get options "language")}
+     :language (get options "language")
+     :sass-config (get options "sassConfig")}
     options))
 
 (defn compile [options]

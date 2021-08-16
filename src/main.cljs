@@ -55,7 +55,7 @@
           (.src (path/resolve files-path (str "**/*." (or extension "css"))))
           (.pipe (debug (clj->js {:title "Test"})))
           (.pipe (plumber))
-          (.pipe (gif gulp-if-sass (sass sass-config)))
+          (.pipe (gif gulp-if-sass (sass (clj->js sass-config))))
           (.pipe (debug (clj->js {:title "Beginning compiling CSS Modules..."})))
           (.pipe (postcss (clj->js plugins) (clj->js (dissoc options "plugins"))))
           (.pipe (gif gulp-if-condition (.dest gulp (path/resolve (or temp-css "")))))

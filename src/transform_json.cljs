@@ -139,6 +139,7 @@
       (path-to-purescript-package-path source-path full-path) json))))
 
 (defn render-complete-file [source-path json language full-path]
+  (prn language)
   (condp = language
     "elm" (render-complete-elm-file source-path json full-path)
     "cljs" (render-complete-clojure-file source-path json full-path)

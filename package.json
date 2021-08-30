@@ -20,6 +20,7 @@
     "gulp-if": "^3.0.0",
     "gulp-plumber": "^1.2.1",
     "gulp-postcss": "^8.0.0",
+    "gulp-sass": "^4.1.1",
     "import-cwd": "^3.0.0",
     "postcss": "^7.0.32",
     "postcss-load-config": "^2.1.0",

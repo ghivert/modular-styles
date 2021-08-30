@@ -10,3 +10,4 @@ test-dist/
 public/
 /styles
 .DS_Store
+.lsp/
